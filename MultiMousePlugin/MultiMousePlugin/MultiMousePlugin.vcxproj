@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="MouseManager.h" />
+    <ClInclude Include="MouseState.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

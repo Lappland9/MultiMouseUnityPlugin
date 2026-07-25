@@ -1,6 +1,6 @@
 #include "HiddenWindow.h"
 
-HiddenWindow::HiddenWindow()
+HiddenWindow::HiddenWindow(RawInputManager& rawInputManager): m_rawInputManager(rawInputManager)
 {
 }
 
@@ -11,6 +11,37 @@ HiddenWindow::~HiddenWindow()
 
 bool HiddenWindow::Create()
 {
+    WNDCLASSEX wc{};
+
+    wc.cbSize = sizeof(WNDCLASSEX);
+    wc.lpfnWndProc = HiddenWindow::WindowProc;
+    wc.hInstance = GetModuleHandle(nullptr);
+    wc.lpszClassName = L"MultiMouseHiddenWindow";
+
+    if (!RegisterClassEx(&wc))
+    {
+        return false;
+    }
+
+    m_hWnd = CreateWindowEx(
+        0,
+        L"MultiMouseHiddenWindow",
+        L"",
+        0,
+        0,
+        0,
+        0,
+        0,
+        nullptr,
+        nullptr,
+        GetModuleHandle(nullptr),
+        nullptr);
+
+    if (m_hWnd == nullptr)
+    {
+        return false;
+    }
+
     return true;
 }
 

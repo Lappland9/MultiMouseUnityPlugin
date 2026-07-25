@@ -2,11 +2,13 @@
 
 #include <Windows.h>
 
+class RawInputManager;
+
 class HiddenWindow
 {
 public:
 
-    HiddenWindow();
+    explicit HiddenWindow(RawInputManager& rawInputManager);
 
     ~HiddenWindow();
 
@@ -19,6 +21,8 @@ public:
 private:
 
     HWND m_hWnd = nullptr;
+
+    RawInputManager& m_rawInputManager;
 
     static LRESULT CALLBACK WindowProc(
         HWND hwnd,

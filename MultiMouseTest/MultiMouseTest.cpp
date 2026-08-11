@@ -1,11 +1,13 @@
 ﻿#include <iostream>
 
-#include "MouseManager.h"
-#include "RawInputManager.h"
 #include "HiddenWindow.h"
+#include "RawInputManager.h"
+#include "MouseManager.h"
 
 int main()
 {
+    std::cout << "MultiMouse Test\n";
+
     MouseManager mouseManager;
 
     RawInputManager rawInputManager(mouseManager);
@@ -14,7 +16,7 @@ int main()
 
     if (!hiddenWindow.Create())
     {
-        std::cout << "Create Failed\n";
+        std::cout << "Hidden Window Create Failed\n";
         return -1;
     }
 

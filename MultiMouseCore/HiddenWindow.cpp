@@ -1,7 +1,10 @@
 #include "pch.h"
-#include "HiddenWindow.h"
 
-HiddenWindow::HiddenWindow(RawInputManager& rawInputManager): m_rawInputManager(rawInputManager)
+#include "HiddenWindow.h"
+#include "RawInputManager.h"
+
+HiddenWindow::HiddenWindow(RawInputManager& rawInputManager)
+    : m_rawInputManager(rawInputManager)
 {
 }
 
@@ -12,19 +15,19 @@ HiddenWindow::~HiddenWindow()
 
 bool HiddenWindow::Create()
 {
-    WNDCLASSEX wc{};
+    WNDCLASSEXW wc{};
 
-    wc.cbSize = sizeof(WNDCLASSEX);
+    wc.cbSize = sizeof(WNDCLASSEXW);
     wc.lpfnWndProc = HiddenWindow::WindowProc;
-    wc.hInstance = GetModuleHandle(nullptr);
+    wc.hInstance = GetModuleHandleW(nullptr);
     wc.lpszClassName = L"MultiMouseHiddenWindow";
 
-    if (!RegisterClassEx(&wc))
+    if (!RegisterClassExW(&wc))
     {
         return false;
     }
 
-    m_hWnd = CreateWindowEx(
+    m_hWnd = CreateWindowExW(
         0,
         L"MultiMouseHiddenWindow",
         L"",
@@ -33,9 +36,9 @@ bool HiddenWindow::Create()
         0,
         0,
         0,
+        HWND_MESSAGE,
         nullptr,
-        nullptr,
-        GetModuleHandle(nullptr),
+        GetModuleHandleW(nullptr),
         nullptr);
 
     if (m_hWnd == nullptr)
@@ -48,7 +51,7 @@ bool HiddenWindow::Create()
 
 void HiddenWindow::Destroy()
 {
-    if (m_hWnd)
+    if (m_hWnd != nullptr)
     {
         DestroyWindow(m_hWnd);
         m_hWnd = nullptr;
@@ -66,5 +69,5 @@ LRESULT CALLBACK HiddenWindow::WindowProc(
     WPARAM wParam,
     LPARAM lParam)
 {
-    return DefWindowProc(hwnd, msg, wParam, lParam);
+    return DefWindowProcW(hwnd, msg, wParam, lParam);
 }

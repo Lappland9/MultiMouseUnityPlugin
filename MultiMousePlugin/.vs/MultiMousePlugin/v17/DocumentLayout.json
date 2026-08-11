@@ -3,17 +3,21 @@
   "WorkspaceRootPath": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMousePlugin\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1E0226EC-C807-4CCB-9A6F-92C280935AF1}|..\\MultiMouseCore\\MultiMouseCore.vcxproj|C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseCore\\MouseState.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E0226EC-C807-4CCB-9A6F-92C280935AF1}|..\\MultiMouseCore\\MultiMouseCore.vcxproj|C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseCore\\MultiMouseCore.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E022E17D-BC6B-4E4B-8995-ADEE3478D000}|..\\MultiMouseTest\\MultiMouseTest.vcxproj|C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseTest\\MultiMouseTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77924A5C-93C1-43E6-93F0-5FE4FCDC67E5}|MultiMousePlugin\\MultiMousePlugin.vcxproj|C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMousePlugin\\MultiMousePlugin\\pch.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{77924A5C-93C1-43E6-93F0-5FE4FCDC67E5}|MultiMousePlugin\\MultiMousePlugin.vcxproj|solutionrelative:MultiMousePlugin\\pch.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{77924A5C-93C1-43E6-93F0-5FE4FCDC67E5}|MultiMousePlugin\\MultiMousePlugin.vcxproj|C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMousePlugin\\MultiMousePlugin\\dllmain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{77924A5C-93C1-43E6-93F0-5FE4FCDC67E5}|MultiMousePlugin\\MultiMousePlugin.vcxproj|solutionrelative:MultiMousePlugin\\dllmain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E0226EC-C807-4CCB-9A6F-92C280935AF1}|..\\MultiMouseCore\\MultiMouseCore.vcxproj|C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseCore\\MouseState.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E0226EC-C807-4CCB-9A6F-92C280935AF1}|..\\MultiMouseCore\\MultiMouseCore.vcxproj|C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseCore\\MultiMouseCore.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,24 +27,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "pch.cpp",
+              "DocumentMoniker": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMousePlugin\\MultiMousePlugin\\pch.cpp",
+              "RelativeDocumentMoniker": "MultiMousePlugin\\pch.cpp",
+              "ToolTip": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMousePlugin\\MultiMousePlugin\\pch.cpp",
+              "RelativeToolTip": "MultiMousePlugin\\pch.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-08-11T18:50:53.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "MouseState.h",
               "DocumentMoniker": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseCore\\MouseState.h",
               "RelativeDocumentMoniker": "..\\MultiMouseCore\\MouseState.h",
               "ToolTip": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseCore\\MouseState.h",
               "RelativeToolTip": "..\\MultiMouseCore\\MouseState.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-07-25T17:50:05.467Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "MultiMouseCore.cpp",
               "DocumentMoniker": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseCore\\MultiMouseCore.cpp",
               "RelativeDocumentMoniker": "..\\MultiMouseCore\\MultiMouseCore.cpp",
@@ -48,25 +65,24 @@
               "RelativeToolTip": "..\\MultiMouseCore\\MultiMouseCore.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-07-25T17:42:38.728Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-25T17:42:38.728Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MultiMouseTest.cpp",
               "DocumentMoniker": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseTest\\MultiMouseTest.cpp",
               "RelativeDocumentMoniker": "..\\MultiMouseTest\\MultiMouseTest.cpp",
               "ToolTip": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMouseTest\\MultiMouseTest.cpp",
               "RelativeToolTip": "..\\MultiMouseTest\\MultiMouseTest.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-07-25T15:20:35.585Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "dllmain.cpp",
               "DocumentMoniker": "C:\\Users\\poohs\\Desktop\\Left\uFF06Right\\MultiMousePlugin\\MultiMousePlugin\\dllmain.cpp",
               "RelativeDocumentMoniker": "MultiMousePlugin\\dllmain.cpp",

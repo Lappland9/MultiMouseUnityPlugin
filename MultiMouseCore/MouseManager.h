@@ -1,21 +1,40 @@
 #pragma once
 
-#include <array>
 #include "MouseState.h"
 
 class MouseManager
 {
 public:
+    void BeginFrame();
 
-    static constexpr std::size_t MaxMouseCount = 4;
+    void UpdateMouse(
+        HANDLE device,
+        LONG deltaX,
+        LONG deltaY);
 
-    MouseManager();
+    const MouseState* GetMouse(int index) const;
 
-    MouseState& GetMouse(std::size_t index);
+    const MouseState* GetMouse(MouseRole role) const;
 
-    const MouseState& GetMouse(std::size_t index) const;
+    bool AssignLeftMouse(HANDLE device);
+    bool AssignRightMouse(HANDLE device);
+
+    void StartLeftPairing();
+    void StartRightPairing();
+
+    bool IsLeftAssigned() const;
+    bool IsRightAssigned() const;
 
 private:
+    static constexpr int MaxMouseCount = 2;
 
-    std::array<MouseState, MaxMouseCount> m_mice;
+    MouseState m_mice[MaxMouseCount];
+
+    int m_mouseCount = 0;
+
+    HANDLE m_leftDevice = nullptr;
+    HANDLE m_rightDevice = nullptr;
+
+    bool m_pairingLeft = false;
+    bool m_pairingRight = false;
 };

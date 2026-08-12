@@ -73,11 +73,10 @@ void RawInputManager::ProcessInput(LPARAM lParam)
 
     if (raw->header.dwType == RIM_TYPEMOUSE)
     {
-        std::cout
-            << "Mouse Input: "
-            << "dx=" << raw->data.mouse.lLastX
-            << ", dy=" << raw->data.mouse.lLastY
-            << std::endl;
+        m_mouseManager.UpdateMouse(
+            raw->header.hDevice,
+            raw->data.mouse.lLastX,
+            raw->data.mouse.lLastY);
     }
 }
 

@@ -14,6 +14,8 @@ public:
 
     void Process(HRAWINPUT hRawInput);
 
+    void ProcessInput(LPARAM lParam);
+
 private:
 
     MouseManager& m_mouseManager;

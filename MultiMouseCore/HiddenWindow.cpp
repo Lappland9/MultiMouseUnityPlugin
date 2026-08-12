@@ -39,10 +39,16 @@ bool HiddenWindow::Create()
         HWND_MESSAGE,
         nullptr,
         GetModuleHandleW(nullptr),
-        nullptr);
+        this);
 
     if (m_hWnd == nullptr)
     {
+        return false;
+    }
+
+    if (!m_rawInputManager.Register(m_hWnd))
+    {
+        Destroy();
         return false;
     }
 
@@ -69,5 +75,32 @@ LRESULT CALLBACK HiddenWindow::WindowProc(
     WPARAM wParam,
     LPARAM lParam)
 {
+    HiddenWindow* self = nullptr;
+
+    if (msg == WM_NCCREATE)
+    {
+        CREATESTRUCTW* createStruct =
+            reinterpret_cast<CREATESTRUCTW*>(lParam);
+
+        self = static_cast<HiddenWindow*>(
+            createStruct->lpCreateParams);
+
+        SetWindowLongPtrW(
+            hwnd,
+            GWLP_USERDATA,
+            reinterpret_cast<LONG_PTR>(self));
+    }
+    else
+    {
+        self = reinterpret_cast<HiddenWindow*>(
+            GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+    }
+
+    if (msg == WM_INPUT && self != nullptr)
+    {
+        self->m_rawInputManager.ProcessInput(lParam);
+        return 0;
+    }
+
     return DefWindowProcW(hwnd, msg, wParam, lParam);
 }

@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <Windows.h>
 
 #include "HiddenWindow.h"
 #include "RawInputManager.h"
@@ -16,13 +17,21 @@ int main()
 
     if (!hiddenWindow.Create())
     {
-        std::cout << "Hidden Window Create Failed\n";
+        std::cout << "Hidden Window Create or Raw Input Register Failed\n";
         return -1;
     }
 
     std::cout << "Hidden Window Created!\n";
+    std::cout << "Move your mouse...\n";
+    std::cout << "Press Ctrl+C to exit.\n";
 
-    std::cin.get();
+    MSG msg{};
+
+    while (GetMessageW(&msg, nullptr, 0, 0) > 0)
+    {
+        TranslateMessage(&msg);
+        DispatchMessageW(&msg);
+    }
 
     return 0;
 }

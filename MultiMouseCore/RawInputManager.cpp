@@ -2,6 +2,8 @@
 #include "RawInputManager.h"
 #include "MouseManager.h"
 #include <Windows.h>
+#include <iostream>
+#include <vector>
 
 RawInputManager::RawInputManager(MouseManager& mouseManager)
     : m_mouseManager(mouseManager)
@@ -33,6 +35,50 @@ bool RawInputManager::Register(HWND hWnd)
     }
 
     return true;
+}
+
+void RawInputManager::ProcessInput(LPARAM lParam)
+{
+    UINT size = 0;
+
+    if (GetRawInputData(
+        reinterpret_cast<HRAWINPUT>(lParam),
+        RID_INPUT,
+        nullptr,
+        &size,
+        sizeof(RAWINPUTHEADER)) == static_cast<UINT>(-1))
+    {
+        return;
+    }
+
+    if (size == 0)
+    {
+        return;
+    }
+
+    std::vector<BYTE> buffer(size);
+
+    if (GetRawInputData(
+        reinterpret_cast<HRAWINPUT>(lParam),
+        RID_INPUT,
+        buffer.data(),
+        &size,
+        sizeof(RAWINPUTHEADER)) != size)
+    {
+        return;
+    }
+
+    RAWINPUT* raw =
+        reinterpret_cast<RAWINPUT*>(buffer.data());
+
+    if (raw->header.dwType == RIM_TYPEMOUSE)
+    {
+        std::cout
+            << "Mouse Input: "
+            << "dx=" << raw->data.mouse.lLastX
+            << ", dy=" << raw->data.mouse.lLastY
+            << std::endl;
+    }
 }
 
 void RawInputManager::Process(HRAWINPUT hRawInput)

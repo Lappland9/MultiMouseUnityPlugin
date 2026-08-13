@@ -14,4 +14,7 @@ struct MouseState
 
     LONG deltaX = 0;
     LONG deltaY = 0;
+
+    bool leftButtonDown = false;
+    bool rightButtonDown = false;
 };

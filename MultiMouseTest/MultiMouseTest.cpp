@@ -138,9 +138,23 @@ int main()
                     leftMouse->deltaY != 0)
                 {
                     std::cout
-                        << "Left Mouse: "
+                        << "Left Mouse Move: "
                         << "dx=" << leftMouse->deltaX
                         << " dy=" << leftMouse->deltaY
+                        << std::endl;
+                }
+
+                if (leftMouse->leftButtonDown)
+                {
+                    std::cout
+                        << "Left Mouse: LEFT BUTTON DOWN"
+                        << std::endl;
+                }
+
+                if (leftMouse->rightButtonDown)
+                {
+                    std::cout
+                        << "Left Mouse: RIGHT BUTTON DOWN"
                         << std::endl;
                 }
             }
@@ -152,9 +166,23 @@ int main()
                     rightMouse->deltaY != 0)
                 {
                     std::cout
-                        << "Right Mouse: "
+                        << "Right Mouse Move: "
                         << "dx=" << rightMouse->deltaX
                         << " dy=" << rightMouse->deltaY
+                        << std::endl;
+                }
+
+                if (rightMouse->leftButtonDown)
+                {
+                    std::cout
+                        << "Right Mouse: LEFT BUTTON DOWN"
+                        << std::endl;
+                }
+
+                if (rightMouse->rightButtonDown)
+                {
+                    std::cout
+                        << "Right Mouse: RIGHT BUTTON DOWN"
                         << std::endl;
                 }
             }

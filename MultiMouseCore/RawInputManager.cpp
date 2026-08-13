@@ -76,7 +76,8 @@ void RawInputManager::ProcessInput(LPARAM lParam)
         m_mouseManager.UpdateMouse(
             raw->header.hDevice,
             raw->data.mouse.lLastX,
-            raw->data.mouse.lLastY);
+            raw->data.mouse.lLastY,
+            raw->data.mouse.usButtonFlags);
     }
 }
 

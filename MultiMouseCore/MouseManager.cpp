@@ -14,8 +14,10 @@ void MouseManager::BeginFrame()
 void MouseManager::UpdateMouse(
     HANDLE device,
     LONG deltaX,
-    LONG deltaY)
+    LONG deltaY,
+    USHORT buttonFlags)
 {
+
     // 左手用マウスのペアリング中
     if (m_pairingLeft)
     {
@@ -41,6 +43,29 @@ void MouseManager::UpdateMouse(
         {
             m_mice[i].deltaX += deltaX;
             m_mice[i].deltaY += deltaY;
+
+            // 左ボタン
+            if (buttonFlags & RI_MOUSE_LEFT_BUTTON_DOWN)
+            {
+                m_mice[i].leftButtonDown = true;
+            }
+
+            if (buttonFlags & RI_MOUSE_LEFT_BUTTON_UP)
+            {
+                m_mice[i].leftButtonDown = false;
+            }
+
+            // 右ボタン
+            if (buttonFlags & RI_MOUSE_RIGHT_BUTTON_DOWN)
+            {
+                m_mice[i].rightButtonDown = true;
+            }
+
+            if (buttonFlags & RI_MOUSE_RIGHT_BUTTON_UP)
+            {
+                m_mice[i].rightButtonDown = false;
+            }
+
             return;
         }
     }
@@ -49,8 +74,15 @@ void MouseManager::UpdateMouse(
     if (m_mouseCount < MaxMouseCount)
     {
         m_mice[m_mouseCount].device = device;
+
         m_mice[m_mouseCount].deltaX = deltaX;
         m_mice[m_mouseCount].deltaY = deltaY;
+
+        m_mice[m_mouseCount].leftButtonDown =
+            (buttonFlags & RI_MOUSE_LEFT_BUTTON_DOWN) != 0;
+
+        m_mice[m_mouseCount].rightButtonDown =
+            (buttonFlags & RI_MOUSE_RIGHT_BUTTON_DOWN) != 0;
 
         ++m_mouseCount;
     }

@@ -10,7 +10,8 @@ public:
     void UpdateMouse(
         HANDLE device,
         LONG deltaX,
-        LONG deltaY);
+        LONG deltaY,
+        USHORT buttonFlags);
 
     const MouseState* GetMouse(int index) const;
 

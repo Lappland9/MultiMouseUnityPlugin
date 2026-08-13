@@ -81,6 +81,20 @@ void RawInputManager::ProcessInput(LPARAM lParam)
     }
 }
 
-void RawInputManager::Process(HRAWINPUT hRawInput)
+void RawInputManager::Unregister()
 {
+    RAWINPUTDEVICE device{};
+
+    device.usUsagePage = 0x01;
+    device.usUsage = 0x02;
+
+    device.dwFlags = RIDEV_REMOVE;
+
+    // RIDEV_REMOVEÇÃèÍçáÇÕnullptrïKê{
+    device.hwndTarget = nullptr;
+
+    RegisterRawInputDevices(
+        &device,
+        1,
+        sizeof(RAWINPUTDEVICE));
 }

@@ -192,6 +192,11 @@ bool MultiMouseCore_Initialize()
 
 void MultiMouseCore_Shutdown()
 {
+    if (g_rawInputManager != nullptr)
+    {
+        g_rawInputManager->Unregister();
+    }
+
     delete g_hiddenWindow;
     delete g_rawInputManager;
     delete g_mouseManager;
@@ -224,18 +229,18 @@ void MultiMouseCore_Update()
         return;
     }
 
-    // 前フレームの入力状態をリセット
     if (g_mouseManager != nullptr)
     {
         g_mouseManager->BeginFrame();
     }
 
-    // Windowsに届いているRaw Inputを処理
     MSG msg{};
+
+    HWND hwnd = g_hiddenWindow->GetHandle();
 
     while (PeekMessageW(
         &msg,
-        nullptr,
+        hwnd,
         0,
         0,
         PM_REMOVE))

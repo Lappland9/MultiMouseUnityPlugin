@@ -24,7 +24,13 @@ bool HiddenWindow::Create()
 
     if (!RegisterClassExW(&wc))
     {
-        return false;
+        DWORD error = GetLastError();
+
+        // ä˘Ç…ìoò^çœÇ›Ç»ÇÁÅAÇªÇÃÇ‹Ç‹égópÇ∑ÇÈ
+        if (error != ERROR_CLASS_ALREADY_EXISTS)
+        {
+            return false;
+        }
     }
 
     m_hWnd = CreateWindowExW(
@@ -62,6 +68,10 @@ void HiddenWindow::Destroy()
         DestroyWindow(m_hWnd);
         m_hWnd = nullptr;
     }
+
+    UnregisterClassW(
+        L"MultiMouseHiddenWindow",
+        GetModuleHandleW(nullptr));
 }
 
 HWND HiddenWindow::GetHandle() const

@@ -1,10 +1,246 @@
-ï»¿// MultiMouseCore.cpp : ã‚¹ã‚¿ãƒ†ã‚£ãƒƒã‚¯ ãƒ©ã‚¤ãƒ–ãƒ©ãƒªç”¨ã®é–¢æ•°ã‚’å®šç¾©ã—ã¾ã™ã€‚
-//
-
 #include "pch.h"
-#include "framework.h"
 
-// TODO: ã“ã‚Œã¯ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªé–¢æ•°ã®ä¾‹ã§ã™
-void fnMultiMouseCore()
+#include "MultiMouseCore.h"
+
+#include "HiddenWindow.h"
+#include "RawInputManager.h"
+#include "MouseManager.h"
+
+namespace
 {
+    MouseManager* g_mouseManager = nullptr;
+    RawInputManager* g_rawInputManager = nullptr;
+    HiddenWindow* g_hiddenWindow = nullptr;
+}
+
+int MultiMouseCore_GetLeftDeltaX()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return 0;
+    }
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+    {
+        return 0;
+    }
+
+    return static_cast<int>(mouse->deltaX);
+}
+
+int MultiMouseCore_GetLeftDeltaY()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return 0;
+    }
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+    {
+        return 0;
+    }
+
+    return static_cast<int>(mouse->deltaY);
+}
+
+int MultiMouseCore_GetRightDeltaX()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return 0;
+    }
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+    {
+        return 0;
+    }
+
+    return static_cast<int>(mouse->deltaX);
+}
+
+int MultiMouseCore_GetRightDeltaY()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return 0;
+    }
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+    {
+        return 0;
+    }
+
+    return static_cast<int>(mouse->deltaY);
+}
+
+bool MultiMouseCore_GetLeftButtonDown()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return false;
+    }
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+    {
+        return false;
+    }
+
+    return mouse->leftButtonDown;
+}
+
+bool MultiMouseCore_GetLeftButtonPressed()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return false;
+    }
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+    {
+        return false;
+    }
+
+    return mouse->leftButtonPressed;
+}
+
+bool MultiMouseCore_GetLeftButtonReleased()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return false;
+    }
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+    {
+        return false;
+    }
+
+    return mouse->leftButtonReleased;
+}
+
+bool MultiMouseCore_IsLeftAssigned()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return false;
+    }
+
+    return g_mouseManager->IsLeftAssigned();
+}
+
+bool MultiMouseCore_IsRightAssigned()
+{
+    if (g_mouseManager == nullptr)
+    {
+        return false;
+    }
+
+    return g_mouseManager->IsRightAssigned();
+}
+
+bool MultiMouseCore_Initialize()
+{
+    if (g_mouseManager != nullptr)
+    {
+        return true;
+    }
+
+    g_mouseManager = new MouseManager();
+
+    g_rawInputManager =
+        new RawInputManager(*g_mouseManager);
+
+    g_hiddenWindow =
+        new HiddenWindow(*g_rawInputManager);
+
+    if (!g_hiddenWindow->Create())
+    {
+        delete g_hiddenWindow;
+        delete g_rawInputManager;
+        delete g_mouseManager;
+
+        g_hiddenWindow = nullptr;
+        g_rawInputManager = nullptr;
+        g_mouseManager = nullptr;
+
+        return false;
+    }
+
+    return true;
+}
+
+void MultiMouseCore_Shutdown()
+{
+    delete g_hiddenWindow;
+    delete g_rawInputManager;
+    delete g_mouseManager;
+
+    g_hiddenWindow = nullptr;
+    g_rawInputManager = nullptr;
+    g_mouseManager = nullptr;
+}
+
+void MultiMouseCore_StartLeftPairing()
+{
+    if (g_mouseManager != nullptr)
+    {
+        g_mouseManager->StartLeftPairing();
+    }
+}
+
+void MultiMouseCore_StartRightPairing()
+{
+    if (g_mouseManager != nullptr)
+    {
+        g_mouseManager->StartRightPairing();
+    }
+}
+
+void MultiMouseCore_Update()
+{
+    if (g_hiddenWindow == nullptr)
+    {
+        return;
+    }
+
+    // ‘OƒtƒŒ[ƒ€‚Ì“ü—Íó‘Ô‚ğƒŠƒZƒbƒg
+    if (g_mouseManager != nullptr)
+    {
+        g_mouseManager->BeginFrame();
+    }
+
+    // Windows‚É“Í‚¢‚Ä‚¢‚éRaw Input‚ğˆ—
+    MSG msg{};
+
+    while (PeekMessageW(
+        &msg,
+        nullptr,
+        0,
+        0,
+        PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessageW(&msg);
+    }
 }

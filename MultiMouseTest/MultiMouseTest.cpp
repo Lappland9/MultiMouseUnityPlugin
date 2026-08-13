@@ -1,199 +1,165 @@
 ﻿#include <iostream>
 #include <Windows.h>
 
-#include "HiddenWindow.h"
-#include "RawInputManager.h"
-#include "MouseManager.h"
+#include "MultiMouseCore.h"
 
 int main()
 {
     std::cout << "MultiMouse Test\n";
 
-    // ----------------------------------------
-    // MouseManager
-    // ----------------------------------------
-    MouseManager mouseManager;
-
-    // ----------------------------------------
-    // RawInputManager
-    // ----------------------------------------
-    RawInputManager rawInputManager(mouseManager);
-
-    // ----------------------------------------
-    // Hidden Window
-    // ----------------------------------------
-    HiddenWindow hiddenWindow(rawInputManager);
-
-    if (!hiddenWindow.Create())
+    // ========================================
+    // 初期化
+    // ========================================
+    if (!MultiMouseCore_Initialize())
     {
-        std::cout
-            << "Hidden Window Create or Raw Input Register Failed\n";
-
-        return -1;
+        std::cout << "MultiMouse Initialize Failed!\n";
+        return 1;
     }
 
-    std::cout << "Hidden Window Created!\n";
+    std::cout << "MultiMouse Initialized!\n";
 
-    // ----------------------------------------
-    // ペアリング処理の状態
-    // ----------------------------------------
-    enum class PairingStep
-    {
-        Left,
-        Right,
-        Complete
-    };
 
-    PairingStep pairingStep = PairingStep::Left;
+    // ========================================
+    // 左手用マウスのペアリング
+    // ========================================
+    std::cout << "\n";
+    std::cout << "Move the LEFT mouse to assign it.\n";
 
-    // ----------------------------------------
-    // 左手用マウスの登録開始
-    // ----------------------------------------
-    std::cout
-        << "Left hand mouse: "
-        << "Move the mouse you want to use for the LEFT hand."
-        << std::endl;
-
-    mouseManager.StartLeftPairing();
-
-    // ----------------------------------------
-    // Windowsメッセージループ
-    // ----------------------------------------
-    MSG msg{};
+    MultiMouseCore_StartLeftPairing();
 
     while (true)
     {
-        // ------------------------------------
-        // Windowsメッセージを処理
-        // ------------------------------------
-        while (PeekMessageW(
-            &msg,
-            nullptr,
-            0,
-            0,
-            PM_REMOVE))
-        {
-            // WM_QUITを受け取ったら終了
-            if (msg.message == WM_QUIT)
-            {
-                return 0;
-            }
+        // Raw Inputを処理
+        MultiMouseCore_Update();
 
-            TranslateMessage(&msg);
-            DispatchMessageW(&msg);
-        }
+        int leftX = MultiMouseCore_GetLeftDeltaX();
+        int leftY = MultiMouseCore_GetLeftDeltaY();
 
-        // ------------------------------------
-        // 左手用マウスの登録確認
-        // ------------------------------------
-        if (pairingStep == PairingStep::Left &&
-            mouseManager.IsLeftAssigned())
+        // 左マウスから入力が来たらペアリング成功
+        if (leftX != 0 || leftY != 0)
         {
             std::cout
-                << "Left mouse assigned!"
+                << "Left Assigned: "
+                << leftX << ", "
+                << leftY
                 << std::endl;
 
-            std::cout
-                << "Right hand mouse: "
-                << "Move the mouse you want to use for the RIGHT hand."
-                << std::endl;
-
-            mouseManager.StartRightPairing();
-
-            pairingStep = PairingStep::Right;
+            break;
         }
 
-        // ------------------------------------
-        // 右手用マウスの登録確認
-        // ------------------------------------
-        if (pairingStep == PairingStep::Right &&
-            mouseManager.IsRightAssigned())
+        // ESCで終了
+        if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
         {
-            std::cout
-                << "Right mouse assigned!"
-                << std::endl;
-
-            std::cout
-                << "Pairing complete!"
-                << std::endl;
-
-            pairingStep = PairingStep::Complete;
+            MultiMouseCore_Shutdown();
+            return 0;
         }
 
-        // ------------------------------------
-        // ペアリング完了後
-        // ------------------------------------
-        if (pairingStep == PairingStep::Complete)
-        {
-            const MouseState* leftMouse =
-                mouseManager.GetMouse(MouseRole::Left);
-
-            const MouseState* rightMouse =
-                mouseManager.GetMouse(MouseRole::Right);
-
-            // 左手マウス
-            if (leftMouse != nullptr)
-            {
-                if (leftMouse->deltaX != 0 ||
-                    leftMouse->deltaY != 0)
-                {
-                    std::cout
-                        << "Left Mouse Move: "
-                        << "dx=" << leftMouse->deltaX
-                        << " dy=" << leftMouse->deltaY
-                        << std::endl;
-                }
-
-                if (leftMouse->leftButtonDown)
-                {
-                    std::cout
-                        << "Left Mouse: LEFT BUTTON DOWN"
-                        << std::endl;
-                }
-
-                if (leftMouse->rightButtonDown)
-                {
-                    std::cout
-                        << "Left Mouse: RIGHT BUTTON DOWN"
-                        << std::endl;
-                }
-            }
-
-            // 右手マウス
-            if (rightMouse != nullptr)
-            {
-                if (rightMouse->deltaX != 0 ||
-                    rightMouse->deltaY != 0)
-                {
-                    std::cout
-                        << "Right Mouse Move: "
-                        << "dx=" << rightMouse->deltaX
-                        << " dy=" << rightMouse->deltaY
-                        << std::endl;
-                }
-
-                if (rightMouse->leftButtonDown)
-                {
-                    std::cout
-                        << "Right Mouse: LEFT BUTTON DOWN"
-                        << std::endl;
-                }
-
-                if (rightMouse->rightButtonDown)
-                {
-                    std::cout
-                        << "Right Mouse: RIGHT BUTTON DOWN"
-                        << std::endl;
-                }
-            }
-
-            // 今のフレームの入力をリセット
-            mouseManager.BeginFrame();
-        }
-
-        // CPUを使い切らないように少し待つ
         Sleep(10);
     }
+
+    std::cout << "Left mouse assigned!\n";
+
+
+    // ========================================
+    // 右手用マウスのペアリング
+    // ========================================
+    std::cout << "\n";
+    std::cout << "Move the RIGHT mouse to assign it.\n";
+
+    MultiMouseCore_StartRightPairing();
+
+    while (true)
+    {
+        // Raw Inputを処理
+        MultiMouseCore_Update();
+
+        int rightX = MultiMouseCore_GetRightDeltaX();
+        int rightY = MultiMouseCore_GetRightDeltaY();
+
+        // 右マウスから入力が来たらペアリング成功
+        if (rightX != 0 || rightY != 0)
+        {
+            std::cout
+                << "Right Assigned: "
+                << rightX << ", "
+                << rightY
+                << std::endl;
+
+            break;
+        }
+
+        // ESCで終了
+        if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+        {
+            MultiMouseCore_Shutdown();
+            return 0;
+        }
+
+        Sleep(10);
+    }
+
+    std::cout << "Right mouse assigned!\n";
+
+
+    // ========================================
+    // ペアリング完了
+    // ========================================
+    std::cout << "\n";
+    std::cout << "Both mice assigned!\n";
+    std::cout << "Move both mice to test them.\n";
+    std::cout << "Press ESC to exit.\n\n";
+
+
+    // ========================================
+    // 通常の入力確認ループ
+    // ========================================
+    while (true)
+    {
+        // 新しいフレームの入力を処理
+        MultiMouseCore_Update();
+
+        // 左マウス
+        int leftX = MultiMouseCore_GetLeftDeltaX();
+        int leftY = MultiMouseCore_GetLeftDeltaY();
+
+        // 右マウス
+        int rightX = MultiMouseCore_GetRightDeltaX();
+        int rightY = MultiMouseCore_GetRightDeltaY();
+
+        // どちらかに移動があった場合だけ表示
+        if (leftX != 0 ||
+            leftY != 0 ||
+            rightX != 0 ||
+            rightY != 0)
+        {
+            std::cout
+                << "Left: "
+                << leftX << ", "
+                << leftY
+                << " | Right: "
+                << rightX << ", "
+                << rightY
+                << std::endl;
+        }
+
+        // ESCでテスト終了
+        if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+        {
+            break;
+        }
+
+        // CPU使用率を抑える
+        Sleep(10);
+    }
+
+
+    // ========================================
+    // 終了処理
+    // ========================================
+    MultiMouseCore_Shutdown();
+
+    std::cout << "\n";
+    std::cout << "MultiMouse Shutdown.\n";
 
     return 0;
 }

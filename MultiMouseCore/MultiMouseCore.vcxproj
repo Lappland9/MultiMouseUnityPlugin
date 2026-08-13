@@ -139,6 +139,7 @@
     <ClInclude Include="HiddenWindow.h" />
     <ClInclude Include="MouseManager.h" />
     <ClInclude Include="MouseState.h" />
+    <ClInclude Include="MultiMouseCore.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RawInputManager.h" />
   </ItemGroup>

@@ -6,8 +6,16 @@ void MouseManager::BeginFrame()
 {
     for (int i = 0; i < m_mouseCount; ++i)
     {
+        // 移動量をリセット
         m_mice[i].deltaX = 0;
         m_mice[i].deltaY = 0;
+
+        // 一瞬だけ発生する入力をリセット
+        m_mice[i].leftButtonPressed = false;
+        m_mice[i].rightButtonPressed = false;
+
+        m_mice[i].leftButtonReleased = false;
+        m_mice[i].rightButtonReleased = false;
     }
 }
 
@@ -44,26 +52,30 @@ void MouseManager::UpdateMouse(
             m_mice[i].deltaX += deltaX;
             m_mice[i].deltaY += deltaY;
 
-            // 左ボタン
+            // 左クリック
             if (buttonFlags & RI_MOUSE_LEFT_BUTTON_DOWN)
             {
                 m_mice[i].leftButtonDown = true;
+                m_mice[i].leftButtonPressed = true;
             }
 
             if (buttonFlags & RI_MOUSE_LEFT_BUTTON_UP)
             {
                 m_mice[i].leftButtonDown = false;
+                m_mice[i].leftButtonReleased = true;
             }
 
-            // 右ボタン
+            // 右クリック
             if (buttonFlags & RI_MOUSE_RIGHT_BUTTON_DOWN)
             {
                 m_mice[i].rightButtonDown = true;
+                m_mice[i].rightButtonPressed = true;
             }
 
             if (buttonFlags & RI_MOUSE_RIGHT_BUTTON_UP)
             {
                 m_mice[i].rightButtonDown = false;
+                m_mice[i].rightButtonReleased = true;
             }
 
             return;

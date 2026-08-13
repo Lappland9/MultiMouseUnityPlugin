@@ -106,13 +106,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\MultiMouseCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\MultiMouseCore;$(SolutionDir)MultiMouseCore</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>MultiMouseCore.lib;user32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\poohs\Desktop\Left＆Right\MultiMousePlugin\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\poohs\Desktop\Left＆Right\MultiMousePlugin\x64\Debug;$(SolutionDir)MultiMousePlugin\x64\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,13 +123,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\MultiMouseCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\MultiMouseCore;$(SolutionDir)MultiMouseCore</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>MultiMouseCore.lib;user32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\poohs\Desktop\Left＆Right\MultiMousePlugin\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\poohs\Desktop\Left＆Right\MultiMousePlugin\x64\Debug;$(SolutionDir)MultiMousePlugin\x64\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

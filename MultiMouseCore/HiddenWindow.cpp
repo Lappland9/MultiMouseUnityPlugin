@@ -109,6 +109,14 @@ LRESULT CALLBACK HiddenWindow::WindowProc(
     if (msg == WM_INPUT && self != nullptr)
     {
         self->m_rawInputManager.ProcessInput(lParam);
+
+        // フォアグラウンドRaw Inputの場合、
+        // Windows側の後処理を行わせる
+        if (GET_RAWINPUT_CODE_WPARAM(wParam) == RIM_INPUT)
+        {
+            DefWindowProcW(hwnd, msg, wParam, lParam);
+        }
+
         return 0;
     }
 

@@ -2,16 +2,52 @@ using UnityEngine;
 
 public class MultiMouseTester : MonoBehaviour
 {
+    [Header("Controlled Objects")]
+    [SerializeField]
+    private Transform leftObject;
+
+    [SerializeField]
+    private Transform rightObject;
+
+    [Header("Movement")]
+    [SerializeField]
+    private float sensitivity = 0.01f;
+
     private bool initialized = false;
 
     private bool waitingForLeft = false;
     private bool waitingForRight = false;
 
+    private Vector3 leftBaseScale;
+    private Vector3 rightBaseScale;
+
+    private Quaternion leftBaseRotation;
+    private Quaternion rightBaseRotation;
+
+
     void Start()
     {
-        Debug.Log("MultiMouse Test Start");
+        // ----------------------------------------
+        // オブジェクトの初期状態を保存
+        // ----------------------------------------
+        if (leftObject != null)
+        {
+            leftBaseScale = leftObject.localScale;
+            leftBaseRotation = leftObject.localRotation;
+        }
 
-        int result = MultiMouseNative.MultiMouse_Initialize();
+        if (rightObject != null)
+        {
+            rightBaseScale = rightObject.localScale;
+            rightBaseRotation = rightObject.localRotation;
+        }
+
+
+        // ----------------------------------------
+        // MultiMouse初期化
+        // ----------------------------------------
+        int result =
+            MultiMouseNative.MultiMouse_Initialize();
 
         if (result == 0)
         {
@@ -29,6 +65,7 @@ public class MultiMouseTester : MonoBehaviour
         waitingForLeft = true;
     }
 
+
     void Update()
     {
         if (!initialized)
@@ -36,14 +73,16 @@ public class MultiMouseTester : MonoBehaviour
             return;
         }
 
-        // Native側の入力を更新
+        // ========================================
+        // Native入力更新
+        // 必ず1フレームに1回だけ
+        // ========================================
         MultiMouseNative.MultiMouse_Update();
 
 
         // ========================================
-        // Left Pairing
+        // LEFT pairing
         // ========================================
-
         if (waitingForLeft)
         {
             if (MultiMouseNative.MultiMouse_IsLeftAssigned() != 0)
@@ -63,9 +102,8 @@ public class MultiMouseTester : MonoBehaviour
 
 
         // ========================================
-        // Right Pairing
+        // RIGHT pairing
         // ========================================
-
         if (waitingForRight)
         {
             if (MultiMouseNative.MultiMouse_IsRightAssigned() != 0)
@@ -81,7 +119,7 @@ public class MultiMouseTester : MonoBehaviour
 
 
         // ========================================
-        // Input Test
+        // Mouse movement
         // ========================================
 
         int leftX =
@@ -97,17 +135,116 @@ public class MultiMouseTester : MonoBehaviour
             MultiMouseNative.MultiMouse_GetRightDeltaY();
 
 
-        if (leftX != 0 ||
-            leftY != 0 ||
-            rightX != 0 ||
-            rightY != 0)
+        // 左マウス
+        if (leftObject != null)
         {
-            Debug.Log(
-                $"Left: {leftX}, {leftY}" +
-                $" | Right: {rightX}, {rightY}"
+            Vector3 movement = new Vector3(
+                leftX,
+                -leftY,
+                0
             );
+
+            leftObject.position +=
+                movement * sensitivity;
+        }
+
+
+        // 右マウス
+        if (rightObject != null)
+        {
+            Vector3 movement = new Vector3(
+                rightX,
+                -rightY,
+                0
+            );
+
+            rightObject.position +=
+                movement * sensitivity;
+        }
+
+
+        // ========================================
+        // LEFT mouse buttons
+        // ========================================
+
+        if (leftObject != null)
+        {
+            bool leftButton =
+                MultiMouseNative.MultiMouse_GetLeftButtonDown() != 0;
+
+            bool rightButton =
+                MultiMouseNative.MultiMouse_GetLeftRightButtonDown() != 0;
+
+
+            // 左クリック中 → 大きくする
+            if (leftButton)
+            {
+                leftObject.localScale =
+                    leftBaseScale * 1.3f;
+            }
+            else
+            {
+                leftObject.localScale =
+                    leftBaseScale;
+            }
+
+
+            // 右クリック中 → 傾ける
+            if (rightButton)
+            {
+                leftObject.localRotation =
+                    leftBaseRotation *
+                    Quaternion.Euler(0, 0, 25);
+            }
+            else
+            {
+                leftObject.localRotation =
+                    leftBaseRotation;
+            }
+        }
+
+
+        // ========================================
+        // RIGHT mouse buttons
+        // ========================================
+
+        if (rightObject != null)
+        {
+            bool leftButton =
+                MultiMouseNative.MultiMouse_GetRightButtonDown() != 0;
+
+            bool rightButton =
+                MultiMouseNative.MultiMouse_GetRightRightButtonDown() != 0;
+
+
+            // 左クリック中 → 大きくする
+            if (leftButton)
+            {
+                rightObject.localScale =
+                    rightBaseScale * 1.3f;
+            }
+            else
+            {
+                rightObject.localScale =
+                    rightBaseScale;
+            }
+
+
+            // 右クリック中 → 傾ける
+            if (rightButton)
+            {
+                rightObject.localRotation =
+                    rightBaseRotation *
+                    Quaternion.Euler(0, 0, -25);
+            }
+            else
+            {
+                rightObject.localRotation =
+                    rightBaseRotation;
+            }
         }
     }
+
 
     void OnDestroy()
     {
@@ -119,7 +256,5 @@ public class MultiMouseTester : MonoBehaviour
         MultiMouseNative.MultiMouse_Shutdown();
 
         initialized = false;
-
-        Debug.Log("MultiMouse Shutdown");
     }
 }

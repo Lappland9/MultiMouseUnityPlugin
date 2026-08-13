@@ -50,4 +50,59 @@ public static class MultiMouseNative
 
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int MultiMouse_GetRightDeltaY();
+
+    // ========================================
+    // Left-hand mouse : Left button
+    // ========================================
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetLeftButtonDown();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetLeftButtonPressed();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetLeftButtonReleased();
+
+
+    // ========================================
+    // Right-hand mouse : Left button
+    // ========================================
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetRightButtonDown();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetRightButtonPressed();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetRightButtonReleased();
+
+
+    // ========================================
+    // Left-hand mouse : Right button
+    // ========================================
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetLeftRightButtonDown();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetLeftRightButtonPressed();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetLeftRightButtonReleased();
+
+
+    // ========================================
+    // Right-hand mouse : Right button
+    // ========================================
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetRightRightButtonDown();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetRightRightButtonPressed();
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int MultiMouse_GetRightRightButtonReleased();
 }

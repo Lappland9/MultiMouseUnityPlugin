@@ -85,20 +85,20 @@ int MultiMouseCore_GetRightDeltaY()
     return static_cast<int>(mouse->deltaY);
 }
 
+// ========================================
+// Left-hand mouse : Left button
+// ========================================
+
 bool MultiMouseCore_GetLeftButtonDown()
 {
     if (g_mouseManager == nullptr)
-    {
         return false;
-    }
 
     const MouseState* mouse =
         g_mouseManager->GetMouse(MouseRole::Left);
 
     if (mouse == nullptr)
-    {
         return false;
-    }
 
     return mouse->leftButtonDown;
 }
@@ -106,17 +106,13 @@ bool MultiMouseCore_GetLeftButtonDown()
 bool MultiMouseCore_GetLeftButtonPressed()
 {
     if (g_mouseManager == nullptr)
-    {
         return false;
-    }
 
     const MouseState* mouse =
         g_mouseManager->GetMouse(MouseRole::Left);
 
     if (mouse == nullptr)
-    {
         return false;
-    }
 
     return mouse->leftButtonPressed;
 }
@@ -124,19 +120,156 @@ bool MultiMouseCore_GetLeftButtonPressed()
 bool MultiMouseCore_GetLeftButtonReleased()
 {
     if (g_mouseManager == nullptr)
-    {
         return false;
-    }
 
     const MouseState* mouse =
         g_mouseManager->GetMouse(MouseRole::Left);
 
     if (mouse == nullptr)
-    {
         return false;
-    }
 
     return mouse->leftButtonReleased;
+}
+
+
+// ========================================
+// Right-hand mouse : Left button
+// ========================================
+
+bool MultiMouseCore_GetRightButtonDown()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->leftButtonDown;
+}
+
+bool MultiMouseCore_GetRightButtonPressed()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->leftButtonPressed;
+}
+
+bool MultiMouseCore_GetRightButtonReleased()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->leftButtonReleased;
+}
+
+
+// ========================================
+// Left-hand mouse : Right button
+// ========================================
+
+bool MultiMouseCore_GetLeftRightButtonDown()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->rightButtonDown;
+}
+
+bool MultiMouseCore_GetLeftRightButtonPressed()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->rightButtonPressed;
+}
+
+bool MultiMouseCore_GetLeftRightButtonReleased()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Left);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->rightButtonReleased;
+}
+
+
+// ========================================
+// Right-hand mouse : Right button
+// ========================================
+
+bool MultiMouseCore_GetRightRightButtonDown()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->rightButtonDown;
+}
+
+bool MultiMouseCore_GetRightRightButtonPressed()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->rightButtonPressed;
+}
+
+bool MultiMouseCore_GetRightRightButtonReleased()
+{
+    if (g_mouseManager == nullptr)
+        return false;
+
+    const MouseState* mouse =
+        g_mouseManager->GetMouse(MouseRole::Right);
+
+    if (mouse == nullptr)
+        return false;
+
+    return mouse->rightButtonReleased;
 }
 
 bool MultiMouseCore_IsLeftAssigned()

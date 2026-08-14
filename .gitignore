@@ -38,3 +38,15 @@ x64/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Unity generated files
+/Left＆Right_UnityProject/[Ll]ibrary/
+/Left＆Right_UnityProject/[Tt]emp/
+/Left＆Right_UnityProject/[Oo]bj/
+/Left＆Right_UnityProject/[Ll]ogs/
+/Left＆Right_UnityProject/[Uu]ser[Ss]ettings/
+
+# Visual Studio generated files
+.vs/
+**/[Dd]ebug/
+**/[Rr]elease/
